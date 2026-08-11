@@ -169,9 +169,9 @@ export function TextEditor({
       <div className="flex-1 overflow-y-auto max-h-[60vh] min-h-[200px]">
         {mode === "edit" && !readOnly ? (
           /* ── Edit Mode: textarea ── */
-          <div className="flex h-full min-h-[200px]">
+          <div className="flex h-full min-h-[200px]" style={{ overflow: 'auto' }}>
             <div
-              className="flex-shrink-0 py-4 pl-4 pr-2 text-right select-none font-code text-sm leading-7 text-text-muted"
+              className="flex-shrink-0 py-4 pl-4 pr-2 text-right select-none font-code text-sm leading-7 text-text-muted sticky left-0 bg-bg-base z-10"
               aria-hidden="true"
             >
               {lines.map((_, i) => {
@@ -210,7 +210,7 @@ export function TextEditor({
                 );
               })}
             </div>
-            <div className="relative flex-1 min-w-0">
+            <div className="relative flex-1">
               <textarea
                 ref={textareaRef}
                 value={displayValue}
@@ -218,9 +218,12 @@ export function TextEditor({
                 placeholder={placeholder}
                 spellCheck={false}
                 wrap="off"
-                className="w-full h-full py-4 pr-4 pl-2 bg-transparent text-text-primary text-sm leading-7 resize-none outline-none whitespace-pre overflow-x-auto"
+                className="w-full h-full py-4 pr-4 pl-2 bg-transparent text-text-primary text-sm leading-7 resize-none outline-none whitespace-pre"
                 style={{
                   minHeight: `${Math.max(lines.length, 10) * 28 + 32}px`,
+                  overflowX: 'auto',
+                  overflowWrap: 'normal',
+                  wordBreak: 'normal',
                 }}
               />
             </div>
