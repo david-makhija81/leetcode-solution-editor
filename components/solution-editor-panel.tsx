@@ -188,40 +188,40 @@ export function SolutionEditorPanel({ problemId, currentUser, solutions, comment
   }
 
   return (
-    <div className="h-full flex flex-col bg-bg-surface">
-      {/* View Toggle */}
-      <div className="flex items-center gap-2 px-3 py-2 border-b border-border-default bg-bg-surface/50">
+    <div className="h-full flex flex-col bg-bg-surface/90 backdrop-blur-sm">
+      {/* View Toggle - Arcade Style */}
+      <div className="flex items-center gap-3 px-4 py-3 border-b-2 border-border-default bg-brand-yellow/10">
         <button
           onClick={() => handleViewChange("mine")}
-          className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
-            view === "mine" ? "bg-bg-elevated text-accent-primary" : "text-text-muted hover:text-text-primary"
+          className={`btn-arcade text-[10px] ${
+            view === "mine" ? "bg-brand-blue border-brand-blue text-white" : "bg-bg-surface text-text-primary"
           }`}
         >
-          <User className="h-3.5 w-3.5" />
+          <User className="h-3 w-3 mr-1.5" />
           My Solutions
         </button>
         <button
           onClick={() => handleViewChange("peers")}
-          className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
-            view === "peers" ? "bg-bg-elevated text-accent-primary" : "text-text-muted hover:text-text-primary"
+          className={`btn-arcade text-[10px] ${
+            view === "peers" ? "bg-brand-green border-brand-green text-white" : "bg-bg-surface text-text-primary"
           }`}
         >
-          <Users className="h-3.5 w-3.5" />
+          <Users className="h-3 w-3 mr-1.5" />
           Peers' Solutions
         </button>
         <button
           onClick={() => handleViewChange("assigned")}
-          className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
-            view === "assigned" ? "bg-bg-elevated text-accent-primary" : "text-text-muted hover:text-text-primary"
+          className={`btn-arcade text-[10px] ${
+            view === "assigned" ? "bg-brand-red border-brand-red text-white" : "bg-bg-surface text-text-primary"
           }`}
         >
-          <ClipboardList className="h-3.5 w-3.5" />
+          <ClipboardList className="h-3 w-3 mr-1.5" />
           Assigned to Me
         </button>
       </div>
 
       {/* Solution set tabs */}
-      <div className="flex items-center gap-0.5 px-3 py-2 border-b border-border-default bg-bg-surface overflow-x-auto">
+      <div className="flex items-center gap-2 px-4 py-2 border-b-2 border-border-default bg-bg-surface overflow-x-auto">
         {displayedSolutions.map((sol, i) => (
           <div
             key={sol.id}
@@ -229,10 +229,10 @@ export function SolutionEditorPanel({ problemId, currentUser, solutions, comment
               setActiveSolutionIndex(i);
               setActiveField("code");
             }}
-            className={`flex-shrink-0 flex items-center gap-1 px-3 py-1.5 text-xs font-medium rounded-md transition-colors duration-150 cursor-pointer ${
+            className={`flex-shrink-0 flex items-center gap-1 px-3 py-1.5 text-xs font-bold rounded-sm border-2 transition-all duration-150 cursor-pointer ${
               i === activeSolutionIndex
-                ? "bg-bg-elevated text-accent-primary"
-                : "text-text-muted hover:text-text-primary hover:bg-bg-base/50"
+                ? "bg-bg-elevated text-brand-blue border-brand-blue shadow-[2px_2px_0px_rgba(59,130,246,0.3)]"
+                : "text-text-secondary border-transparent hover:border-border-default hover:bg-bg-base"
             }`}
           >
             {i === activeSolutionIndex && view === "mine" ? (
@@ -240,7 +240,7 @@ export function SolutionEditorPanel({ problemId, currentUser, solutions, comment
                 <input
                   value={sol.label}
                   onChange={(e) => updateField("label", e.target.value)}
-                  className="bg-transparent outline-none w-28 text-accent-primary border-b border-accent-primary/50 focus:border-accent-primary"
+                  className="bg-transparent outline-none w-28 text-brand-blue border-b-2 border-brand-blue/50 focus:border-brand-blue"
                   onClick={(e) => e.stopPropagation()}
                 />
                 <button
@@ -248,10 +248,10 @@ export function SolutionEditorPanel({ problemId, currentUser, solutions, comment
                     e.stopPropagation();
                     confirmDelete(sol.id);
                   }}
-                  className="p-0.5 text-text-muted hover:text-state-error rounded-sm transition-colors"
+                  className="p-1 ml-1 text-text-muted hover:text-brand-red hover:bg-brand-red/10 rounded-sm transition-colors"
                   title="Delete solution"
                 >
-                  <Trash2 className="h-3.5 w-3.5" />
+                  <Trash2 className="h-4 w-4" />
                 </button>
               </>
             ) : (
@@ -262,10 +262,10 @@ export function SolutionEditorPanel({ problemId, currentUser, solutions, comment
         {view === "mine" && (
           <button
             onClick={handleAddSolution}
-            className="flex-shrink-0 flex items-center gap-1 px-2 py-1.5 text-xs text-text-muted hover:text-accent-primary transition-colors rounded-md hover:bg-bg-base/50"
+            className="flex-shrink-0 flex items-center gap-1 px-2 py-1.5 text-xs text-text-muted hover:text-brand-green border-2 border-dashed border-border-default hover:border-brand-green transition-colors rounded-sm hover:bg-brand-green/5 ml-1"
             title="Add new solution"
           >
-            <Plus className="h-3.5 w-3.5" />
+            <Plus className="h-4 w-4" strokeWidth={3} />
           </button>
         )}
       </div>
@@ -273,15 +273,15 @@ export function SolutionEditorPanel({ problemId, currentUser, solutions, comment
       {activeSolution ? (
         <>
           {/* Field tabs */}
-          <div className="flex items-center gap-0.5 px-3 py-1.5 border-b border-border-default bg-bg-surface/50">
+          <div className="flex items-center gap-1.5 px-4 py-2 border-b-2 border-border-default bg-bg-surface/50">
             {fieldTabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveField(tab.id)}
-                className={`flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-md transition-all duration-150 ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider rounded-sm border-2 transition-all duration-150 ${
                   activeField === tab.id
-                    ? "bg-accent-primary/10 text-accent-primary"
-                    : "text-text-muted hover:text-text-primary hover:bg-bg-elevated/50"
+                    ? "bg-text-primary text-bg-base border-text-primary shadow-[2px_2px_0px_rgba(0,0,0,0.2)]"
+                    : "text-text-muted border-transparent hover:text-text-primary hover:border-border-default"
                 }`}
               >
                 {tab.icon}
@@ -346,18 +346,18 @@ export function SolutionEditorPanel({ problemId, currentUser, solutions, comment
           </div>
 
           {/* Footer */}
-          <div className="px-4 py-2 border-t border-border-default bg-bg-surface/50 flex items-center justify-between text-xs text-text-muted">
+          <div className="px-4 py-3 border-t-2 border-border-default bg-brand-blue/5 flex items-center justify-between text-xs text-text-secondary font-medium">
             <span className="flex items-center gap-1.5">
-              by <span className="font-medium text-text-primary">{activeSolution.authorName}</span>
+              by <span className="font-bold text-text-primary">{activeSolution.authorName}</span>
             </span>
             <div className="flex items-center gap-3">
               {activeSolution.reviewer ? (
-                <span className={`flex items-center gap-1.5 px-3 py-1 rounded-md font-medium ${
+                <span className={`flex items-center gap-1.5 px-3 py-1.5 border-2 rounded-sm font-bold shadow-[2px_2px_0px_rgba(0,0,0,0.1)] ${
                   activeSolution.reviewerId === currentUser?.id 
-                    ? "bg-state-success/10 text-state-success" 
-                    : "bg-bg-elevated text-accent-primary"
+                    ? "bg-brand-green/20 text-brand-green border-brand-green/50" 
+                    : "bg-bg-elevated text-brand-blue border-brand-blue/30"
                 }`}>
-                  <Check className="h-3 w-3" />
+                  <Check className="h-3 w-3" strokeWidth={3} />
                   {activeSolution.reviewerId === currentUser?.id ? "Assigned to You" : `Assigned to ${activeSolution.reviewer.name}`}
                 </span>
               ) : null}
@@ -367,13 +367,13 @@ export function SolutionEditorPanel({ problemId, currentUser, solutions, comment
                     setSelectedReviewerId(activeSolution.reviewerId || null);
                     setShowReviewPicker(true);
                   }}
-                  className="flex items-center gap-1.5 px-3 py-1 rounded-md font-medium bg-accent-primary/10 text-accent-primary hover:bg-accent-primary/20 transition-colors"
+                  className="btn-arcade bg-bg-surface !py-1.5 !px-3 !text-[9px] hover:text-brand-blue"
                 >
-                  <Send className="h-3 w-3" />
+                  <Send className="h-3 w-3 mr-1" />
                   {activeSolution.reviewer ? "Change Reviewer" : "Request Review"}
                 </button>
               )}
-              <span>
+              <span className="opacity-60">
                 {new Date(activeSolution.createdAt).toLocaleDateString("en-US", {
                   month: "short",
                   day: "numeric",

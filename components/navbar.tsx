@@ -8,33 +8,33 @@ interface NavbarProps {
 
 export function Navbar({ breadcrumbs }: NavbarProps) {
   return (
-    <header className="sticky top-0 z-50 flex items-center justify-between h-14 px-6 bg-bg-surface/80 backdrop-blur-md border-b border-border-default">
+    <header className="sticky top-0 z-50 flex items-center justify-between h-14 px-6 bg-bg-surface/90 backdrop-blur-md border-b-2 border-border-default shadow-sm">
       {/* Left: Logo + Breadcrumbs */}
       <div className="flex items-center gap-3">
         <Link
           href="/"
-          className="flex items-center gap-2 text-accent-primary hover:text-accent-hover transition-colors"
+          className="flex items-center gap-2 text-brand-blue hover:text-brand-red transition-colors"
         >
-          <Code2 className="h-5 w-5" />
-          <span className="font-semibold text-sm tracking-tight">
+          <Code2 className="h-6 w-6" strokeWidth={2.5} />
+          <span className="font-arcade text-sm tracking-tight pt-1">
             LeetSolve
           </span>
         </Link>
 
         {breadcrumbs && breadcrumbs.length > 0 && (
-          <nav className="flex items-center gap-1.5 text-sm" aria-label="Breadcrumb">
+          <nav className="flex items-center gap-1.5 text-sm ml-4" aria-label="Breadcrumb">
             {breadcrumbs.map((crumb, i) => (
               <span key={i} className="flex items-center gap-1.5">
-                <ChevronRight className="h-3.5 w-3.5 text-text-muted" />
+                <ChevronRight className="h-4 w-4 text-text-muted" strokeWidth={3} />
                 {crumb.href ? (
                   <Link
                     href={crumb.href}
-                    className="text-text-muted hover:text-text-primary transition-colors"
+                    className="text-text-muted font-medium hover:text-brand-blue transition-colors"
                   >
                     {crumb.label}
                   </Link>
                 ) : (
-                  <span className="text-text-primary">{crumb.label}</span>
+                  <span className="text-text-primary font-bold">{crumb.label}</span>
                 )}
               </span>
             ))}
@@ -49,7 +49,7 @@ export function Navbar({ breadcrumbs }: NavbarProps) {
         </Show>
         <Show when="signed-out">
           <SignInButton mode="modal">
-            <button className="px-4 py-1.5 bg-accent-primary hover:bg-accent-secondary text-text-inverse text-sm font-medium rounded-md transition-colors">
+            <button className="btn-arcade bg-brand-green border-brand-green text-bg-surface hover:bg-brand-blue hover:border-brand-blue">
               Sign In
             </button>
           </SignInButton>
