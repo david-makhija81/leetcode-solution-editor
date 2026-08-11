@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid()) // Clerk User ID
+  name      String
+  email     String   @unique
+  avatar    String?
+  createdAt DateTime @default(now())
+
+  solutions     SolutionSet[]
+  comments      Comment[]
+  assignedReviews SolutionSet[] @relation("ReviewAssignments")
+}
+
+model Problem {
+  id            String   @id // e.g. "two-sum"
+  number        Int
+  title         String
+  difficulty    String
+  tags          String // JSON string or simple comma-separated
+  statement     String
+  status        String   @default("unsolved")
+  
+  solutions     SolutionSet[]
+}
+
+model SolutionSet {
+  id          String   @id @default(cuid())
+  problemId   String
+  authorId    String
+  label       String
+  language    String
+  code        String
+  intuition   String
+  approach    String
+  complexity  String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  problem     Problem  @relation(fields: [problemId], references: [id])
+  author      User     @relation(fields: [authorId], references: [id])
+  comments    Comment[]
+  
+  reviewerId  String?
+  reviewer    User?    @relation("ReviewAssignments", fields: [reviewerId], references: [id])
+}
+
+model Comment {
+  id            String   @id @default(cuid())
+  solutionSetId String
+  authorId      String
+  field         String   // "code" | "intuition" | "approach" | "complexity"
+  line          Int
+  content       String
+  createdAt     DateTime @default(now())
+
+  solutionSet   SolutionSet @relation(fields: [solutionSetId], references: [id])
+  author        User        @relation(fields: [authorId], references: [id])
+}
