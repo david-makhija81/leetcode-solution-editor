@@ -1,9 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Plus, Code, Lightbulb, Route, Timer, Trash2, Users, User, Send, Check, X, ClipboardList } from "lucide-react";
+import { Plus, Code, Lightbulb, Route, Timer, Trash2, Users, User, Send, Check, X, ClipboardList, HelpCircle } from "lucide-react";
 import { CodeEditor } from "@/components/ui/code-editor";
 import { TextEditor } from "@/components/ui/text-editor";
+import { ClarityQuestionsEditor } from "@/components/ui/clarity-questions-editor";
+import { ComplexityEditor } from "@/components/ui/complexity-editor";
 import { CommentSidebar } from "@/components/comment-sidebar";
 import { createSolutionSet, updateSolutionSet, deleteSolutionSet, assignReviewer } from "@/app/actions/solutions";
 import { getAllUsers } from "@/app/actions/users";
@@ -18,13 +20,14 @@ interface SolutionEditorPanelProps {
   onAddComment: (solutionSetId: string, field: "code" | "intuition" | "approach" | "complexity", line: number, content: string) => void;
 }
 
-type FieldTab = "code" | "intuition" | "approach" | "complexity";
+type FieldTab = "code" | "intuition" | "approach" | "complexity" | "clarityQuestions";
 
 const fieldTabs: { id: FieldTab; label: string; icon: React.ReactNode }[] = [
   { id: "code", label: "Code", icon: <Code className="h-4 w-4" /> },
   { id: "intuition", label: "Intuition", icon: <Lightbulb className="h-4 w-4" /> },
   { id: "approach", label: "Approach", icon: <Route className="h-4 w-4" /> },
   { id: "complexity", label: "Complexity", icon: <Timer className="h-4 w-4" /> },
+  { id: "clarityQuestions", label: "Clarity Questions", icon: <HelpCircle className="h-4 w-4" /> },
 ];
 
 export function SolutionEditorPanel({ problemId, currentUser, solutions, comments, onAddComment }: SolutionEditorPanelProps) {
@@ -123,7 +126,11 @@ export function SolutionEditorPanel({ problemId, currentUser, solutions, comment
         code: "",
         intuition: "",
         approach: "",
-        complexity: "",
+        complexity: JSON.stringify([
+          { label: "Worst Case Time Complexity", value: "" },
+          { label: "Worst Case Space Complexity", value: "" },
+        ]),
+        clarityQuestions: "[]",
       });
 
       // Optimistic update using returned data
@@ -319,14 +326,17 @@ export function SolutionEditorPanel({ problemId, currentUser, solutions, comment
               />
             )}
             {activeField === "complexity" && (
-              <TextEditor
+              <ComplexityEditor
                 value={activeSolution.complexity}
                 onChange={view === "mine" ? (v) => updateField("complexity", v) : undefined}
-                label="Time & Space Complexity"
-                placeholder={view === "mine" ? "Analyze the time and space complexity..." : ""}
                 readOnly={view !== "mine"}
-                lineComments={comments.filter((c) => c.solutionSetId === activeSolution.id && c.field === "complexity")}
-                onAddLineComment={(line, content) => onAddComment(activeSolution.id, "complexity", line, content)}
+              />
+            )}
+            {activeField === "clarityQuestions" && (
+              <ClarityQuestionsEditor
+                value={activeSolution.clarityQuestions || "[]"}
+                onChange={view === "mine" ? (v) => updateField("clarityQuestions", v) : undefined}
+                readOnly={view !== "mine"}
               />
             )}
           </div>

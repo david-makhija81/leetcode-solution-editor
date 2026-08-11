@@ -33,6 +33,7 @@ export interface SolutionSet {
   intuition: string;
   approach: string;
   complexity: string;
+  clarityQuestions: string;
   authorName: string;
   createdAt: string;
 }

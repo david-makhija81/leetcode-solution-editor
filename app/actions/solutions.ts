@@ -14,6 +14,7 @@ export async function createSolutionSet(data: {
   intuition: string;
   approach: string;
   complexity: string;
+  clarityQuestions?: string;
 }) {
   const user = await currentUser();
   if (user) {
@@ -43,6 +44,7 @@ export async function createSolutionSet(data: {
       intuition: data.intuition,
       approach: data.approach,
       complexity: data.complexity,
+      clarityQuestions: data.clarityQuestions || "[]",
     },
   });
 
@@ -59,6 +61,7 @@ export async function updateSolutionSet(
     intuition?: string;
     approach?: string;
     complexity?: string;
+    clarityQuestions?: string;
   }
 ) {
   const solution = await prisma.solutionSet.update({
