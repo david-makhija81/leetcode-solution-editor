@@ -21,7 +21,7 @@
     "scripting"
   ],
   "host_permissions": [
-    "http://localhost:3000/*",
-    "https://leetcode.com/problems/*"
+    "https://leetcode.com/*",
+    "https://leetcode-solution-editor.vercel.app/*"
   ]
 }

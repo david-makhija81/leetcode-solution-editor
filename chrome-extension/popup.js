@@ -27,8 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
       
       const titleSlug = pathParts[problemsIndex + 1];
 
-      // Send the slug to our local Next.js server
-      const response = await fetch('http://localhost:3000/api/import', {
+      // Send the code to our backend
+      const response = await fetch('https://leetcode-solution-editor.vercel.app/api/import', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
