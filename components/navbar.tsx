@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Code2, ChevronRight } from "lucide-react";
-import { Show, SignInButton, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 
 interface NavbarProps {
   breadcrumbs?: { label: string; href?: string }[];
@@ -44,16 +44,16 @@ export function Navbar({ breadcrumbs }: NavbarProps) {
 
       {/* Right: Auth */}
       <div className="flex items-center gap-3">
-        <Show when="signed-in">
+        <SignedIn>
           <UserButton />
-        </Show>
-        <Show when="signed-out">
+        </SignedIn>
+        <SignedOut>
           <SignInButton mode="modal">
             <button className="px-4 py-1.5 bg-accent-primary hover:bg-accent-secondary text-text-inverse text-sm font-medium rounded-md transition-colors">
               Sign In
             </button>
           </SignInButton>
-        </Show>
+        </SignedOut>
       </div>
     </header>
   );
