@@ -262,7 +262,8 @@ export function CodeEditor({
               onChange={handleChange}
               onKeyDown={handleKeyDown}
               spellCheck={false}
-              className="w-full h-full py-4 pr-4 pl-2 bg-transparent text-text-primary font-code text-sm leading-6 resize-none outline-none"
+              wrap="off"
+              className="w-full h-full py-4 pr-4 pl-2 bg-transparent text-text-primary font-code text-sm leading-6 resize-none outline-none whitespace-pre overflow-x-auto"
               style={{
                 minHeight: `${Math.max(lines.length, 10) * 24 + 32}px`,
               }}
