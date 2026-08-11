@@ -245,6 +245,7 @@ This transforms the problem from "find two numbers that sum to target" into "for
       complexity: `**Time Complexity:** O(n) — We traverse the list once. Each lookup in the hash map is O(1).
 
 **Space Complexity:** O(n) — The hash map stores at most n elements.`,
+      clarityQuestions: "[]",
       authorId: "david-makhija",
     authorName: "David Makhija",
       createdAt: "2026-08-01T10:30:00Z",
@@ -271,6 +272,7 @@ This transforms the problem from "find two numbers that sum to target" into "for
       complexity: `**Time Complexity:** O(n²) — Nested loops checking all pairs.
 
 **Space Complexity:** O(1) — No extra data structures used.`,
+      clarityQuestions: "[]",
       authorId: "david-makhija",
     authorName: "David Makhija",
       createdAt: "2026-07-28T09:00:00Z",
@@ -304,6 +306,7 @@ This transforms the problem from "find two numbers that sum to target" into "for
       complexity: `**Time Complexity:** O(n log n) — Due to sorting.
 
 **Space Complexity:** O(n) — To store the tuples with original indices.`,
+      clarityQuestions: "[]",
       authorId: "ravi-kumar",
     authorName: "Ravi Kumar",
       createdAt: "2026-08-05T12:00:00Z",
@@ -334,6 +337,7 @@ var twoSum = function(nums, target) {
       complexity: `**Time Complexity:** O(n)
 
 **Space Complexity:** O(n)`,
+      clarityQuestions: "[]",
       authorId: "priya-sharma",
     authorName: "Priya Sharma",
       createdAt: "2026-08-08T16:45:00Z",
@@ -368,6 +372,7 @@ var twoSum = function(nums, target) {
       complexity: `**Time Complexity:** O(n) — Single pass through the string.
 
 **Space Complexity:** O(n) — Stack can hold up to n/2 opening brackets.`,
+      clarityQuestions: "[]",
       authorId: "david-makhija",
     authorName: "David Makhija",
       createdAt: "2026-08-03T14:00:00Z",
@@ -401,6 +406,7 @@ var twoSum = function(nums, target) {
       complexity: `**Time Complexity:** O(n log n) — Dominated by the sorting step.
 
 **Space Complexity:** O(n) — For the merged output array.`,
+      clarityQuestions: "[]",
       authorId: "david-makhija",
     authorName: "David Makhija",
       createdAt: "2026-08-05T16:30:00Z",
@@ -433,6 +439,7 @@ var twoSum = function(nums, target) {
       complexity: `**Time Complexity:** O(n) — Single pass through the prices array.
 
 **Space Complexity:** O(1) — Only two variables tracked.`,
+      clarityQuestions: "[]",
       authorId: "david-makhija",
     authorName: "David Makhija",
       createdAt: "2026-08-02T11:00:00Z",
@@ -466,6 +473,7 @@ var twoSum = function(nums, target) {
       complexity: `**Time Complexity:** O(n) — Each character is added and removed from the set at most once.
 
 **Space Complexity:** O(min(m, n)) — Where m is the charset size and n is the string length.`,
+      clarityQuestions: "[]",
       authorId: "david-makhija",
     authorName: "David Makhija",
       createdAt: "2026-08-04T08:15:00Z",
@@ -497,6 +505,7 @@ var twoSum = function(nums, target) {
       complexity: `**Time Complexity:** O(n) — Single pass, no inner while loop.
 
 **Space Complexity:** O(min(m, n)) — Hash map stores at most min(charset, string length) entries.`,
+      clarityQuestions: "[]",
       authorId: "david-makhija",
     authorName: "David Makhija",
       createdAt: "2026-08-04T09:30:00Z",
@@ -544,6 +553,7 @@ var twoSum = function(nums, target) {
       complexity: `**Time Complexity:** O(log min(m, n)) — Binary search on the smaller array.
 
 **Space Complexity:** O(1) — Constant extra space.`,
+      clarityQuestions: "[]",
       authorId: "david-makhija",
     authorName: "David Makhija",
       createdAt: "2026-08-06T20:00:00Z",
