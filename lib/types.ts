@@ -41,7 +41,7 @@ export interface SolutionSet {
 export interface Comment {
   id: string;
   solutionSetId: string;
-  field: "code" | "intuition" | "approach" | "complexity";
+  field: "code" | "intuition" | "approach" | "complexity" | "clarityQuestions";
   line: number;
   content: string;
   authorId: string;
@@ -59,7 +59,7 @@ export interface MockUser {
 export interface LineComment {
   id: string;
   solutionSetId: string;
-  field: "code" | "intuition" | "approach" | "complexity";
+  field: "code" | "intuition" | "approach" | "complexity" | "clarityQuestions";
   line: number; // 1-indexed line number
   content: string;
   authorName: string;

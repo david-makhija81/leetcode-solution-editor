@@ -26,7 +26,7 @@ export function ProblemPageClient({ problem, initialSolutions }: ProblemPageClie
 
   async function handleAddComment(
     solutionSetId: string,
-    field: "code" | "intuition" | "approach" | "complexity",
+    field: "code" | "intuition" | "approach" | "complexity" | "clarityQuestions",
     line: number,
     content: string
   ) {

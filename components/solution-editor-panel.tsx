@@ -17,7 +17,7 @@ interface SolutionEditorPanelProps {
   currentUser: any;
   solutions: SolutionSet[];
   comments: Comment[];
-  onAddComment: (solutionSetId: string, field: "code" | "intuition" | "approach" | "complexity", line: number, content: string) => void;
+  onAddComment: (solutionSetId: string, field: "code" | "intuition" | "approach" | "complexity" | "clarityQuestions", line: number, content: string) => void;
 }
 
 type FieldTab = "code" | "intuition" | "approach" | "complexity" | "clarityQuestions";
@@ -330,6 +330,8 @@ export function SolutionEditorPanel({ problemId, currentUser, solutions, comment
                 value={activeSolution.complexity}
                 onChange={view === "mine" ? (v) => updateField("complexity", v) : undefined}
                 readOnly={view !== "mine"}
+                lineComments={comments.filter((c) => c.solutionSetId === activeSolution.id && c.field === "complexity")}
+                onAddLineComment={(line, content) => onAddComment(activeSolution.id, "complexity", line, content)}
               />
             )}
             {activeField === "clarityQuestions" && (
@@ -337,6 +339,8 @@ export function SolutionEditorPanel({ problemId, currentUser, solutions, comment
                 value={activeSolution.clarityQuestions || "[]"}
                 onChange={view === "mine" ? (v) => updateField("clarityQuestions", v) : undefined}
                 readOnly={view !== "mine"}
+                lineComments={comments.filter((c) => c.solutionSetId === activeSolution.id && c.field === "clarityQuestions")}
+                onAddLineComment={(line, content) => onAddComment(activeSolution.id, "clarityQuestions", line, content)}
               />
             )}
           </div>
