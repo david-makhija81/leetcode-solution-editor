@@ -53,7 +53,7 @@ export default async function ProblemPage({ params }: { params: Promise<{ id: st
   });
 
   // Map Prisma models to expected format for the frontend
-  const mappedSolutions = solutions.map(s => ({
+  const mappedSolutions = solutions.map((s: any) => ({
     ...s,
     authorName: s.author?.name || "Anonymous",
   }));

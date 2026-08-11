@@ -77,7 +77,7 @@ export function SolutionEditorPanel({ problemId, currentUser, solutions, comment
     if (showReviewPicker && peerUsers.length === 0) {
       getAllUsers().then(res => {
         if (res.success && res.users) {
-          setPeerUsers(res.users.filter(u => u.id !== currentUser?.id));
+          setPeerUsers(res.users.filter((u: any) => u.id !== currentUser?.id));
         }
       });
     }
