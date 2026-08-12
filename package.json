@@ -18,13 +18,17 @@
     "lucide-react": "^1.31.0",
     "next": "16.3.0",
     "pg": "^8.23.0",
+    "prism-react-renderer": "^2.4.1",
+    "prismjs": "^1.30.0",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "react-simple-code-editor": "^0.14.1"
   },
   "devDependencies": {
     "@prisma/compute-sdk": "^0.40.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
+    "@types/prismjs": "^1.26.6",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "dotenv": "^17.4.2",
