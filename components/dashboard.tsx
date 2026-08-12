@@ -94,7 +94,7 @@ export function Dashboard({ problems }: { problems: any[] }) {
 
         {/* Filter tabs + search */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
-          <div className="flex items-center gap-1.5 bg-bg-surface p-1.5 rounded-sm border-2 border-border-default shadow-[4px_4px_0px_rgba(0,0,0,0.05)] overflow-x-auto">
+          <div className="flex items-center justify-between w-full gap-1 sm:gap-1.5 bg-bg-surface p-1.5 rounded-sm border-2 border-border-default shadow-[4px_4px_0px_rgba(0,0,0,0.05)]">
             {filterTabs.map((tab) => {
               const count =
                 tab.id === "all"
@@ -107,18 +107,19 @@ export function Dashboard({ problems }: { problems: any[] }) {
                   key={tab.id}
                   onClick={() => setActiveFilter(tab.id)}
                   className={`
-                    flex items-center gap-1.5 px-3 py-2 text-[9px] font-arcade uppercase rounded-sm transition-all duration-150 whitespace-nowrap border-2
+                    flex flex-1 min-w-0 items-center justify-center gap-1 sm:gap-1.5 px-1 sm:px-3 py-2 text-[6px] sm:text-[9px] font-arcade uppercase rounded-sm transition-all duration-150 border-2
                     ${
                       activeFilter === tab.id
                         ? "bg-brand-blue border-text-primary text-bg-surface shadow-[2px_2px_0px_rgba(0,0,0,1)] translate-y-[1px]"
                         : "bg-transparent border-transparent text-text-muted hover:text-text-primary hover:bg-bg-elevated hover:border-border-default"
                     }
                   `}
+                  title={tab.label}
                 >
-                  <div className="hidden sm:block">{tab.icon}</div>
-                  {tab.label}
+                  <div className="hidden lg:block flex-shrink-0">{tab.icon}</div>
+                  <span className="truncate">{tab.label}</span>
                   <span
-                    className={`ml-1 text-[8px] ${
+                    className={`ml-0.5 sm:ml-1 text-[6px] sm:text-[8px] flex-shrink-0 ${
                       activeFilter === tab.id
                         ? "text-bg-surface/80"
                         : "text-text-muted/60"
