@@ -16,7 +16,7 @@ export function ProblemCard({ problem, assignedSolutionId }: ProblemCardProps) {
   return (
     <Link
       href={href}
-      className="group block p-5 bg-bg-surface rounded-lg border border-border-default hover:border-border-active hover:bg-bg-elevated/50 transition-all duration-200"
+      className="group block p-5 bg-bg-surface rounded-sm border-2 border-text-primary hover:shadow-[6px_6px_0px_rgba(0,0,0,1)] hover:-translate-y-1 transition-all duration-200"
     >
       {/* Header row */}
       <div className="flex items-start justify-between gap-3 mb-3">

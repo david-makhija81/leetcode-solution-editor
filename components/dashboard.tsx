@@ -94,7 +94,7 @@ export function Dashboard({ problems }: { problems: any[] }) {
 
         {/* Filter tabs + search */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
-          <div className="flex items-center gap-1 bg-bg-surface p-1 rounded-lg border border-border-default overflow-x-auto">
+          <div className="flex items-center gap-1.5 bg-bg-surface p-1.5 rounded-sm border-2 border-border-default shadow-[4px_4px_0px_rgba(0,0,0,0.05)] overflow-x-auto">
             {filterTabs.map((tab) => {
               const count =
                 tab.id === "all"
@@ -107,24 +107,24 @@ export function Dashboard({ problems }: { problems: any[] }) {
                   key={tab.id}
                   onClick={() => setActiveFilter(tab.id)}
                   className={`
-                    flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-md transition-all duration-150 whitespace-nowrap
+                    flex items-center gap-1.5 px-3 py-2 text-[9px] font-arcade uppercase rounded-sm transition-all duration-150 whitespace-nowrap border-2
                     ${
                       activeFilter === tab.id
-                        ? "bg-bg-elevated text-accent-primary"
-                        : "text-text-muted hover:text-text-primary"
+                        ? "bg-brand-blue border-text-primary text-bg-surface shadow-[2px_2px_0px_rgba(0,0,0,1)] translate-y-[1px]"
+                        : "bg-transparent border-transparent text-text-muted hover:text-text-primary hover:bg-bg-elevated hover:border-border-default"
                     }
                   `}
                 >
-                  {tab.icon}
+                  <div className="hidden sm:block">{tab.icon}</div>
                   {tab.label}
                   <span
-                    className={`ml-0.5 text-xs ${
+                    className={`ml-1 text-[8px] ${
                       activeFilter === tab.id
-                        ? "text-accent-primary/60"
-                        : "text-text-muted/50"
+                        ? "text-bg-surface/80"
+                        : "text-text-muted/60"
                     }`}
                   >
-                    {count}
+                    [{count}]
                   </span>
                 </button>
               );
@@ -133,13 +133,13 @@ export function Dashboard({ problems }: { problems: any[] }) {
 
           <div className="flex items-center gap-2 w-full sm:w-auto">
             <div className="relative w-full sm:w-64">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-muted" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-muted" strokeWidth={3} />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search problems..."
-                className="w-full pl-9 pr-4 py-2 bg-bg-surface border border-border-default rounded-lg text-sm text-text-primary placeholder:text-text-muted/50 outline-none focus:border-accent-primary/50 transition-colors"
+                placeholder="SEARCH PROBLEMS..."
+                className="w-full pl-9 pr-4 py-2 bg-bg-surface border-2 border-border-default rounded-sm text-sm font-arcade uppercase text-text-primary placeholder:text-text-muted/40 outline-none focus:border-brand-blue focus:shadow-[4px_4px_0px_rgba(59,130,246,0.2)] shadow-[4px_4px_0px_rgba(0,0,0,0.05)] transition-all"
               />
             </div>
           </div>
