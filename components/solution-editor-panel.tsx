@@ -193,29 +193,35 @@ export function SolutionEditorPanel({ problemId, currentUser, solutions, comment
       <div className="flex items-center gap-3 px-4 py-3 border-b-2 border-border-default bg-brand-yellow/10">
         <button
           onClick={() => handleViewChange("mine")}
-          className={`btn-arcade text-[10px] ${
-            view === "mine" ? "bg-brand-blue border-brand-blue text-white" : "bg-bg-surface text-text-primary"
+          className={`flex items-center gap-1.5 px-4 py-2 border-2 border-text-primary font-arcade text-[9px] uppercase transition-all duration-150 rounded-sm ${
+            view === "mine"
+              ? "bg-bg-surface text-text-primary translate-y-[3px] shadow-[1px_1px_0px_rgba(0,0,0,1)]"
+              : "bg-text-primary text-bg-base shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_rgba(0,0,0,1)]"
           }`}
         >
-          <User className="h-3 w-3 mr-1.5" />
+          <User className="h-3 w-3" />
           My Solutions
         </button>
         <button
           onClick={() => handleViewChange("peers")}
-          className={`btn-arcade text-[10px] ${
-            view === "peers" ? "bg-brand-green border-brand-green text-white" : "bg-bg-surface text-text-primary"
+          className={`flex items-center gap-1.5 px-4 py-2 border-2 border-text-primary font-arcade text-[9px] uppercase transition-all duration-150 rounded-sm ${
+            view === "peers"
+              ? "bg-bg-surface text-text-primary translate-y-[3px] shadow-[1px_1px_0px_rgba(0,0,0,1)]"
+              : "bg-text-primary text-bg-base shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_rgba(0,0,0,1)]"
           }`}
         >
-          <Users className="h-3 w-3 mr-1.5" />
+          <Users className="h-3 w-3" />
           Peers' Solutions
         </button>
         <button
           onClick={() => handleViewChange("assigned")}
-          className={`btn-arcade text-[10px] ${
-            view === "assigned" ? "bg-brand-red border-brand-red text-white" : "bg-bg-surface text-text-primary"
+          className={`flex items-center gap-1.5 px-4 py-2 border-2 border-text-primary font-arcade text-[9px] uppercase transition-all duration-150 rounded-sm ${
+            view === "assigned"
+              ? "bg-bg-surface text-text-primary translate-y-[3px] shadow-[1px_1px_0px_rgba(0,0,0,1)]"
+              : "bg-text-primary text-bg-base shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_rgba(0,0,0,1)]"
           }`}
         >
-          <ClipboardList className="h-3 w-3 mr-1.5" />
+          <ClipboardList className="h-3 w-3" />
           Assigned to Me
         </button>
       </div>
