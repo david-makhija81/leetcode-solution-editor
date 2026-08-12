@@ -23,11 +23,11 @@ interface SolutionEditorPanelProps {
 type FieldTab = "code" | "intuition" | "approach" | "complexity" | "clarityQuestions";
 
 const fieldTabs: { id: FieldTab; label: string; icon: React.ReactNode }[] = [
-  { id: "code", label: "Code", icon: <Code className="h-4 w-4" /> },
+  { id: "clarityQuestions", label: "Clarity Questions", icon: <HelpCircle className="h-4 w-4" /> },
   { id: "intuition", label: "Intuition", icon: <Lightbulb className="h-4 w-4" /> },
   { id: "approach", label: "Approach", icon: <Route className="h-4 w-4" /> },
+  { id: "code", label: "Code", icon: <Code className="h-4 w-4" /> },
   { id: "complexity", label: "Complexity", icon: <Timer className="h-4 w-4" /> },
-  { id: "clarityQuestions", label: "Clarity Questions", icon: <HelpCircle className="h-4 w-4" /> },
 ];
 
 export function SolutionEditorPanel({ problemId, currentUser, solutions, comments, onAddComment }: SolutionEditorPanelProps) {
@@ -36,7 +36,7 @@ export function SolutionEditorPanel({ problemId, currentUser, solutions, comment
 
   const [view, setView] = useState<"mine" | "peers" | "assigned">("mine");
   const [activeSolutionIndex, setActiveSolutionIndex] = useState(0);
-  const [activeField, setActiveField] = useState<FieldTab>("code");
+  const [activeField, setActiveField] = useState<FieldTab>("clarityQuestions");
   const [solutionData, setSolutionData] = useState(solutions);
   const [solutionIdToDelete, setSolutionIdToDelete] = useState<string | null>(null);
   
@@ -96,7 +96,7 @@ export function SolutionEditorPanel({ problemId, currentUser, solutions, comment
   function handleViewChange(newView: "mine" | "peers" | "assigned") {
     setView(newView);
     setActiveSolutionIndex(0);
-    setActiveField("code");
+    setActiveField("clarityQuestions");
   }
 
   async function updateField(field: keyof SolutionSet, value: string) {
@@ -142,7 +142,7 @@ export function SolutionEditorPanel({ problemId, currentUser, solutions, comment
       
       setView("mine");
       setActiveSolutionIndex(displayedSolutions.length);
-      setActiveField("code");
+      setActiveField("clarityQuestions");
     } catch (error) {
       console.error("Failed to create solution", error);
     }
@@ -233,7 +233,7 @@ export function SolutionEditorPanel({ problemId, currentUser, solutions, comment
             key={sol.id}
             onClick={() => {
               setActiveSolutionIndex(i);
-              setActiveField("code");
+              setActiveField("clarityQuestions");
             }}
             className={`flex-shrink-0 flex items-center gap-1 px-3 py-1.5 text-xs font-bold rounded-sm border-2 transition-all duration-150 cursor-pointer ${
               i === activeSolutionIndex
@@ -298,15 +298,13 @@ export function SolutionEditorPanel({ problemId, currentUser, solutions, comment
 
           {/* Editor area */}
           <div className="flex-1 overflow-y-auto p-4">
-            {activeField === "code" && activeSolution && (
-              <CodeEditor
-                value={activeSolution.code}
-                onChange={view === "mine" ? (v) => updateField("code", v) : undefined}
-                language={activeSolution.language}
-                onLanguageChange={view === "mine" ? (v) => updateField("language", v) : undefined}
+            {activeField === "clarityQuestions" && (
+              <ClarityQuestionsEditor
+                value={activeSolution.clarityQuestions || "[]"}
+                onChange={view === "mine" ? (v) => updateField("clarityQuestions", v) : undefined}
                 readOnly={view !== "mine"}
-                lineComments={comments.filter((c) => c.solutionSetId === activeSolution.id && c.field === "code")}
-                onAddLineComment={(line, content) => onAddComment(activeSolution.id, "code", line, content)}
+                lineComments={comments.filter((c) => c.solutionSetId === activeSolution.id && c.field === "clarityQuestions")}
+                onAddLineComment={(line, content) => onAddComment(activeSolution.id, "clarityQuestions", line, content)}
               />
             )}
             {activeField === "intuition" && (
@@ -331,6 +329,17 @@ export function SolutionEditorPanel({ problemId, currentUser, solutions, comment
                 onAddLineComment={(line, content) => onAddComment(activeSolution.id, "approach", line, content)}
               />
             )}
+            {activeField === "code" && activeSolution && (
+              <CodeEditor
+                value={activeSolution.code}
+                onChange={view === "mine" ? (v) => updateField("code", v) : undefined}
+                language={activeSolution.language}
+                onLanguageChange={view === "mine" ? (v) => updateField("language", v) : undefined}
+                readOnly={view !== "mine"}
+                lineComments={comments.filter((c) => c.solutionSetId === activeSolution.id && c.field === "code")}
+                onAddLineComment={(line, content) => onAddComment(activeSolution.id, "code", line, content)}
+              />
+            )}
             {activeField === "complexity" && (
               <ComplexityEditor
                 value={activeSolution.complexity}
@@ -338,15 +347,6 @@ export function SolutionEditorPanel({ problemId, currentUser, solutions, comment
                 readOnly={view !== "mine"}
                 lineComments={comments.filter((c) => c.solutionSetId === activeSolution.id && c.field === "complexity")}
                 onAddLineComment={(line, content) => onAddComment(activeSolution.id, "complexity", line, content)}
-              />
-            )}
-            {activeField === "clarityQuestions" && (
-              <ClarityQuestionsEditor
-                value={activeSolution.clarityQuestions || "[]"}
-                onChange={view === "mine" ? (v) => updateField("clarityQuestions", v) : undefined}
-                readOnly={view !== "mine"}
-                lineComments={comments.filter((c) => c.solutionSetId === activeSolution.id && c.field === "clarityQuestions")}
-                onAddLineComment={(line, content) => onAddComment(activeSolution.id, "clarityQuestions", line, content)}
               />
             )}
           </div>
