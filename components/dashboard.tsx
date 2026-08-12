@@ -93,7 +93,7 @@ export function Dashboard({ problems }: { problems: any[] }) {
         </div>
 
         {/* Filter tabs + search */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+        <div className="flex flex-col items-stretch gap-4 mb-6">
           <div className="flex items-center justify-between w-full gap-1 sm:gap-1.5 bg-bg-surface p-1.5 rounded-sm border-2 border-border-default shadow-[4px_4px_0px_rgba(0,0,0,0.05)]">
             {filterTabs.map((tab) => {
               const count =
@@ -132,8 +132,8 @@ export function Dashboard({ problems }: { problems: any[] }) {
             })}
           </div>
 
-          <div className="flex items-center gap-2 w-full sm:w-auto">
-            <div className="relative w-full sm:w-64">
+          <div className="flex items-center gap-2 w-full">
+            <div className="relative w-full">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-muted" strokeWidth={3} />
               <input
                 type="text"
