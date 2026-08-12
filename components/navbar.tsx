@@ -22,19 +22,19 @@ export function Navbar({ breadcrumbs }: NavbarProps) {
         </Link>
 
         {breadcrumbs && breadcrumbs.length > 0 && (
-          <nav className="flex items-center gap-1.5 text-sm ml-4" aria-label="Breadcrumb">
+          <nav className="flex items-center gap-2 text-[10px] ml-4 font-arcade pt-1" aria-label="Breadcrumb">
             {breadcrumbs.map((crumb, i) => (
-              <span key={i} className="flex items-center gap-1.5">
-                <ChevronRight className="h-4 w-4 text-text-muted" strokeWidth={3} />
+              <span key={i} className="flex items-center gap-2">
+                <ChevronRight className="h-3 w-3 text-text-muted/60" strokeWidth={4} />
                 {crumb.href ? (
                   <Link
                     href={crumb.href}
-                    className="text-text-muted font-medium hover:text-brand-blue transition-colors"
+                    className="text-text-muted hover:text-brand-blue transition-colors uppercase"
                   >
                     {crumb.label}
                   </Link>
                 ) : (
-                  <span className="text-text-primary font-bold">{crumb.label}</span>
+                  <span className="text-text-secondary uppercase">{crumb.label}</span>
                 )}
               </span>
             ))}
