@@ -24,7 +24,7 @@ const filterTabs: { id: FilterTab; label: string; icon: React.ReactNode }[] = [
   { id: "solved", label: "Solved", icon: <CheckCircle2 className="h-4 w-4" /> },
   { id: "in-review", label: "In Review", icon: <Clock className="h-4 w-4" /> },
   { id: "reviewed", label: "Reviewed", icon: <Star className="h-4 w-4" /> },
-  { id: "assigned", label: "Assigned to Me", icon: <CheckCircle2 className="h-4 w-4" /> },
+  { id: "assigned", label: "Pending for review", icon: <CheckCircle2 className="h-4 w-4" /> },
 ];
 
 export function Dashboard({ problems }: { problems: any[] }) {

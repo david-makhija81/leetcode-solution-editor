@@ -166,65 +166,68 @@ export function TextEditor({
       {/* Editor area */}
       <div className="flex-1 overflow-y-auto max-h-[60vh] min-h-[200px]">
         {mode === "edit" && !readOnly ? (
-          /* ── Edit Mode: textarea ── */
-          <div className="flex h-full min-h-[200px]" style={{ overflow: 'auto' }}>
-            <div
-              className="flex-shrink-0 py-4 pl-4 pr-2 text-right select-none font-code text-sm leading-7 text-text-muted sticky left-0 bg-bg-base z-10"
-              aria-hidden="true"
+          /* ── Edit Mode: textarea with hidden sync layer ── */
+          <div className="relative min-h-full">
+            {/* Background layer for height, wrapping, and line numbers */}
+            <div 
+              className="w-full py-4 pr-4 pl-14 font-code text-sm sm:text-[15px] font-bold leading-7 whitespace-pre-wrap text-transparent select-none"
+              style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}
             >
-              {lines.map((_, i) => {
+              {lines.map((lineContent, i) => {
                 const lineNum = i + 1;
                 const hasComments = !!commentsByLine[lineNum]?.length;
+
                 return (
-                  <div
-                    key={i}
-                    className="h-7 relative flex items-center justify-end gap-1"
-                    onMouseEnter={() => setHoveredLine(lineNum)}
-                    onMouseLeave={() => setHoveredLine(null)}
-                  >
-                    {hoveredLine === lineNum && onAddLineComment && (
-                      <button
-                        onClick={() => openCommentForm(lineNum)}
-                        className="absolute -left-1 w-5 h-5 flex items-center justify-center rounded bg-brand-blue text-bg-base hover:bg-brand-blue/80 transition-colors shadow-[2px_2px_0px_rgba(0,0,0,0.2)]"
-                        title={`Comment on paragraph ${lineNum}`}
-                      >
-                        <Plus className="h-3 w-3" />
-                      </button>
-                    )}
-                    {hasComments && (
-                      <button
-                        onClick={() => {
-                          setMode("review");
-                          setExpandedLines((prev) => new Set(prev).add(lineNum));
-                        }}
-                        className="w-4 h-4 flex items-center justify-center"
-                        title={`${commentsByLine[lineNum].length} comment(s)`}
-                      >
-                        <MessageSquare className="h-3 w-3 text-brand-yellow drop-shadow-sm" />
-                      </button>
-                    )}
-                    <span>{lineNum}</span>
+                  <div key={i} className="relative">
+                    {/* Gutter */}
+                    <div 
+                      className="absolute right-full mr-2 w-10 h-7 flex items-center justify-end gap-1 text-text-muted visible pointer-events-auto"
+                      onMouseEnter={() => setHoveredLine(lineNum)}
+                      onMouseLeave={() => setHoveredLine(null)}
+                    >
+                      {hoveredLine === lineNum && onAddLineComment && (
+                        <button
+                          onClick={() => openCommentForm(lineNum)}
+                          className="absolute -left-1 w-5 h-5 flex items-center justify-center rounded bg-brand-blue text-bg-base hover:bg-brand-blue/80 transition-colors shadow-[2px_2px_0px_rgba(0,0,0,0.2)] z-20"
+                          title={`Comment on paragraph ${lineNum}`}
+                        >
+                          <Plus className="h-3 w-3" />
+                        </button>
+                      )}
+                      {hasComments && (
+                        <button
+                          onClick={() => {
+                            setMode("review");
+                            setExpandedLines((prev) => new Set(prev).add(lineNum));
+                          }}
+                          className="w-4 h-4 flex items-center justify-center z-10"
+                          title={`${commentsByLine[lineNum].length} comment(s)`}
+                        >
+                          <MessageSquare className="h-3 w-3 text-brand-yellow drop-shadow-sm" />
+                        </button>
+                      )}
+                      <span>{lineNum}</span>
+                    </div>
+                    {/* Invisible text content to force correct height for this line */}
+                    {lineContent || '\u200B'}
                   </div>
                 );
               })}
             </div>
-            <div className="relative flex-1">
-              <textarea
-                ref={textareaRef}
-                value={displayValue}
-                onChange={handleChange}
-                placeholder={placeholder}
-                spellCheck={false}
-                wrap="off"
-                className="w-full h-full py-4 pr-4 pl-2 bg-transparent text-text-primary text-sm sm:text-[15px] leading-7 resize-none outline-none whitespace-pre font-code font-bold"
-                style={{
-                  minHeight: `${Math.max(lines.length, 10) * 28 + 32}px`,
-                  overflowX: 'auto',
-                  overflowWrap: 'normal',
-                  wordBreak: 'normal',
-                }}
-              />
-            </div>
+
+            {/* Foreground textarea */}
+            <textarea
+              ref={textareaRef}
+              value={displayValue}
+              onChange={handleChange}
+              placeholder={placeholder}
+              spellCheck={false}
+              className="absolute top-0 left-14 right-0 bottom-0 h-full py-4 pr-4 pl-0 bg-transparent text-text-primary font-code text-sm sm:text-[15px] font-bold leading-7 resize-none outline-none overflow-hidden whitespace-pre-wrap"
+              style={{ 
+                wordBreak: 'break-word', 
+                overflowWrap: 'anywhere'
+              }}
+            />
           </div>
         ) : (
           /* ── Review Mode: line-by-line with inline comments ── */

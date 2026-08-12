@@ -222,7 +222,7 @@ export function SolutionEditorPanel({ problemId, currentUser, solutions, comment
           }`}
         >
           <ClipboardList className="h-3 w-3" />
-          Assigned to Me
+          Pending for review
         </button>
       </div>
 
