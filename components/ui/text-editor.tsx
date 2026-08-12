@@ -27,12 +27,9 @@ export function TextEditor({
   onAddLineComment,
 }: TextEditorProps) {
   const [internalValue, setInternalValue] = useState(value);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const displayValue = onChange ? value : internalValue;
-  // Fallback to empty string to ensure at least one line is rendered
-  const lines = (displayValue || "").split("\n");
+  const lines = displayValue.split("\n");
 
-  // Review vs edit mode
   const [mode, setMode] = useState<"review" | "edit">(
     readOnly || lineComments.length > 0 ? "review" : "edit"
   );
@@ -41,7 +38,6 @@ export function TextEditor({
   const [expandedLines, setExpandedLines] = useState<Set<number>>(new Set());
   const [showCommentsInline, setShowCommentsInline] = useState(true);
 
-  // Auto-expand any line that has comments
   useEffect(() => {
     setExpandedLines((prev) => {
       const next = new Set(prev);
@@ -55,7 +51,9 @@ export function TextEditor({
       return changed ? next : prev;
     });
   }, [lineComments]);
+
   const [hoveredLine, setHoveredLine] = useState<number | null>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const commentsByLine: Record<number, LineComment[]> = {};
   for (const c of lineComments) {
@@ -65,11 +63,11 @@ export function TextEditor({
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      const newValue = e.target.value;
+      const val = e.target.value;
       if (onChange) {
-        onChange(newValue);
+        onChange(val);
       } else {
-        setInternalValue(newValue);
+        setInternalValue(val);
       }
     },
     [onChange]
@@ -108,7 +106,7 @@ export function TextEditor({
       <div className="flex items-center justify-between px-4 py-2 bg-bg-surface border-b border-border-default flex-shrink-0">
         <div className="flex items-center gap-3">
           {label && (
-            <span className="text-xs text-text-muted font-medium uppercase tracking-wider">
+            <span className="text-[10px] text-brand-blue font-bold font-arcade uppercase tracking-wider">
               {label}
             </span>
           )}
@@ -117,14 +115,14 @@ export function TextEditor({
         <div className="flex items-center gap-2">
           {hasAnyComments && (
             <div className="flex items-center gap-3 mr-2">
-              <span className="flex items-center gap-1 text-xs text-text-muted">
+              <span className="flex items-center gap-1 text-[10px] font-bold text-brand-yellow uppercase">
                 <MessageSquare className="h-3 w-3" />
                 {lineComments.length}
               </span>
               {mode === "review" && (
                 <button
                   onClick={() => setShowCommentsInline((prev) => !prev)}
-                  className="text-xs text-text-muted hover:text-text-primary transition-colors underline decoration-dotted underline-offset-2"
+                  className="text-[9px] font-bold text-text-muted hover:text-text-primary transition-colors uppercase underline decoration-dotted underline-offset-2 tracking-wider"
                 >
                   {showCommentsInline ? "Hide Comments" : "Show Comments"}
                 </button>
@@ -132,12 +130,12 @@ export function TextEditor({
             </div>
           )}
           {!readOnly && (
-            <div className="flex items-center bg-bg-elevated rounded-md p-0.5">
+            <div className="flex items-center bg-bg-elevated rounded-sm p-0.5 border border-border-default">
               <button
                 onClick={() => setMode("edit")}
-                className={`flex items-center gap-1 px-2 py-1 text-xs rounded transition-colors ${
+                className={`flex items-center gap-1 px-2 py-1 text-[9px] font-bold uppercase tracking-wider rounded-sm transition-all ${
                   mode === "edit"
-                    ? "bg-bg-surface text-accent-primary shadow-sm"
+                    ? "bg-bg-surface text-brand-blue shadow-[1px_1px_0px_rgba(0,0,0,0.1)] border-b border-r border-border-default/50"
                     : "text-text-muted hover:text-text-primary"
                 }`}
               >
@@ -146,9 +144,9 @@ export function TextEditor({
               </button>
               <button
                 onClick={() => setMode("review")}
-                className={`flex items-center gap-1 px-2 py-1 text-xs rounded transition-colors ${
+                className={`flex items-center gap-1 px-2 py-1 text-[9px] font-bold uppercase tracking-wider rounded-sm transition-all ${
                   mode === "review"
-                    ? "bg-bg-surface text-accent-primary shadow-sm"
+                    ? "bg-bg-surface text-brand-blue shadow-[1px_1px_0px_rgba(0,0,0,0.1)] border-b border-r border-border-default/50"
                     : "text-text-muted hover:text-text-primary"
                 }`}
               >
@@ -158,8 +156,8 @@ export function TextEditor({
             </div>
           )}
           {readOnly && (
-            <span className="text-xs text-text-muted bg-bg-elevated px-2 py-0.5 rounded-sm">
-              Read only
+            <span className="text-[9px] font-arcade text-text-muted uppercase border border-border-default shadow-[2px_2px_0px_rgba(0,0,0,0.1)] px-2 py-1 rounded-sm bg-bg-base">
+              READ ONLY
             </span>
           )}
         </div>
@@ -187,7 +185,7 @@ export function TextEditor({
                     {hoveredLine === lineNum && onAddLineComment && (
                       <button
                         onClick={() => openCommentForm(lineNum)}
-                        className="absolute -left-1 w-5 h-5 flex items-center justify-center rounded bg-accent-primary text-bg-base hover:bg-accent-primary/80 transition-colors"
+                        className="absolute -left-1 w-5 h-5 flex items-center justify-center rounded bg-brand-blue text-bg-base hover:bg-brand-blue/80 transition-colors shadow-[2px_2px_0px_rgba(0,0,0,0.2)]"
                         title={`Comment on paragraph ${lineNum}`}
                       >
                         <Plus className="h-3 w-3" />
@@ -202,7 +200,7 @@ export function TextEditor({
                         className="w-4 h-4 flex items-center justify-center"
                         title={`${commentsByLine[lineNum].length} comment(s)`}
                       >
-                        <MessageSquare className="h-3 w-3 text-accent-primary" />
+                        <MessageSquare className="h-3 w-3 text-brand-yellow drop-shadow-sm" />
                       </button>
                     )}
                     <span>{lineNum}</span>
@@ -218,7 +216,7 @@ export function TextEditor({
                 placeholder={placeholder}
                 spellCheck={false}
                 wrap="off"
-                className="w-full h-full py-4 pr-4 pl-2 bg-transparent text-text-primary text-sm leading-7 resize-none outline-none whitespace-pre"
+                className="w-full h-full py-4 pr-4 pl-2 bg-transparent text-text-primary text-sm leading-7 resize-none outline-none whitespace-pre font-medium"
                 style={{
                   minHeight: `${Math.max(lines.length, 10) * 28 + 32}px`,
                   overflowX: 'auto',
@@ -251,7 +249,7 @@ export function TextEditor({
                       {(hoveredLine === lineNum && onAddLineComment) ? (
                         <button
                           onClick={() => openCommentForm(lineNum)}
-                          className="w-5 h-5 flex items-center justify-center rounded bg-accent-primary text-bg-base hover:bg-accent-primary/80 transition-all mt-1"
+                          className="w-5 h-5 flex items-center justify-center rounded bg-brand-blue text-bg-base hover:bg-brand-blue/80 transition-all shadow-[2px_2px_0px_rgba(0,0,0,0.2)] mt-1"
                           title={`Comment on paragraph ${lineNum}`}
                         >
                           <Plus className="h-3 w-3" />
@@ -265,7 +263,7 @@ export function TextEditor({
                           className="w-5 h-5 flex items-center justify-center rounded transition-colors mt-1"
                           title={`${commentsByLine[lineNum].length} comment(s)`}
                         >
-                          <MessageSquare className={`h-3 w-3 ${isExpanded ? "text-accent-primary" : "text-accent-primary/60"}`} />
+                          <MessageSquare className={`h-3 w-3 ${isExpanded ? "text-brand-yellow drop-shadow-sm" : "text-brand-yellow/60"}`} />
                         </button>
                       ) : (
                         <span className="w-5" />
@@ -275,7 +273,7 @@ export function TextEditor({
 
                     {/* Text content */}
                     <div className="flex-1 min-w-0 py-1 pr-4 pl-2">
-                      <div className={`text-sm leading-7 text-text-primary whitespace-pre-wrap ${isEmpty ? "h-7" : ""}`}>
+                      <div className={`text-sm leading-7 text-text-primary whitespace-pre-wrap font-medium ${isEmpty ? "h-7" : ""}`}>
                         {lineContent}
                       </div>
                     </div>
@@ -283,7 +281,7 @@ export function TextEditor({
 
                   {/* Inline comment thread for this line */}
                   {lineHasComments && isExpanded && (
-                    <div className="border-y border-accent-primary/20 bg-bg-elevated/40 ml-14 mr-4 my-1 rounded-lg overflow-hidden">
+                    <div className="border-y border-brand-yellow/30 bg-bg-elevated/80 ml-14 mr-4 my-1 rounded-sm shadow-[2px_2px_0px_rgba(0,0,0,0.05)] overflow-hidden">
                       {commentsByLine[lineNum].map((comment) => (
                         <div
                           key={comment.id}
@@ -293,21 +291,21 @@ export function TextEditor({
                           <img
                             src={comment.authorAvatar}
                             alt={comment.authorName}
-                            className="w-6 h-6 rounded-full flex-shrink-0 mt-0.5"
+                            className="w-6 h-6 rounded-full flex-shrink-0 mt-0.5 border border-border-default/20"
                           />
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-1">
-                              <span className="text-xs font-medium text-text-primary">
+                              <span className="text-xs font-bold text-brand-blue uppercase tracking-wider">
                                 {comment.authorName}
                               </span>
-                              <span className="text-xs text-text-muted">
+                              <span className="text-[10px] text-text-muted uppercase">
                                 {new Date(comment.createdAt).toLocaleDateString("en-US", {
                                   month: "short",
                                   day: "numeric",
                                 })}
                               </span>
                             </div>
-                            <p className="text-sm text-text-secondary leading-relaxed">
+                            <p className="text-sm text-text-primary leading-relaxed font-medium">
                               {comment.content}
                             </p>
                           </div>
@@ -318,7 +316,7 @@ export function TextEditor({
                       {onAddLineComment && !isCommenting && (
                         <button
                           onClick={() => openCommentForm(lineNum)}
-                          className="w-full px-4 py-2 text-xs text-text-muted hover:text-accent-primary hover:bg-bg-elevated/50 transition-colors text-left"
+                          className="w-full px-4 py-2 text-[10px] uppercase font-bold text-brand-blue hover:text-text-primary hover:bg-brand-blue/10 transition-colors text-left"
                         >
                           Write a reply…
                         </button>
@@ -328,13 +326,13 @@ export function TextEditor({
 
                   {/* New comment form for this line */}
                   {isCommenting && (
-                    <div className="border-y border-accent-primary/30 bg-bg-elevated/50 ml-14 mr-4 my-1 rounded-lg p-3">
+                    <div className="border border-brand-blue/50 bg-bg-elevated/80 ml-14 mr-4 my-1 rounded-sm p-3 shadow-[4px_4px_0px_rgba(0,0,0,0.05)]">
                       <div className="flex items-start gap-3">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={currentUser.avatar}
                           alt={currentUser.name}
-                          className="w-6 h-6 rounded-full flex-shrink-0 mt-1"
+                          className="w-6 h-6 rounded-full flex-shrink-0 mt-1 border border-border-default/20"
                         />
                         <div className="flex-1">
                           <textarea
@@ -351,12 +349,12 @@ export function TextEditor({
                                 setCommentDraft("");
                               }
                             }}
-                            placeholder={`Leave a comment on paragraph ${lineNum}…`}
-                            className="w-full bg-bg-base border border-border-default rounded-lg px-3 py-2 text-sm text-text-primary placeholder:text-text-muted/50 outline-none focus:border-accent-primary resize-none"
+                            placeholder={`COMMENTING ON LINE ${lineNum}...`}
+                            className="w-full bg-bg-base border-2 border-border-default rounded-sm px-3 py-2 text-sm text-text-primary placeholder:text-text-muted/50 outline-none focus:border-brand-blue transition-colors resize-none font-medium"
                             rows={2}
                           />
                           <div className="flex items-center justify-between mt-2">
-                            <span className="text-xs text-text-muted">
+                            <span className="text-[10px] text-text-muted uppercase font-bold tracking-wider">
                               ⌘ Enter to submit · Esc to cancel
                             </span>
                             <div className="flex items-center gap-2">
@@ -365,14 +363,14 @@ export function TextEditor({
                                   setCommentingLine(null);
                                   setCommentDraft("");
                                 }}
-                                className="px-3 py-1 text-xs text-text-muted hover:text-text-primary transition-colors"
+                                className="px-3 py-1 text-[10px] uppercase font-bold text-text-muted hover:text-text-primary transition-colors"
                               >
                                 Cancel
                               </button>
                               <button
                                 onClick={handleSubmitComment}
                                 disabled={!commentDraft.trim()}
-                                className="flex items-center gap-1 px-3 py-1 text-xs font-medium bg-accent-primary text-bg-base rounded-md hover:bg-accent-primary/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                                className="flex items-center gap-1 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider bg-brand-blue text-bg-base rounded-sm hover:bg-brand-blue/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed shadow-[2px_2px_0px_rgba(0,0,0,0.2)]"
                               >
                                 <Send className="h-3 w-3" />
                                 Comment
