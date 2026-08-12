@@ -120,12 +120,12 @@ export function ClarityQuestionsEditor({
           return (
             <Fragment key={i}>
               <div
-                className="flex items-start sm:items-center flex-col sm:flex-row gap-3 group py-1 rounded-sm transition-colors px-1"
+                className="flex items-start flex-col sm:flex-row gap-3 group py-1 rounded-sm transition-colors px-1"
                 onMouseEnter={() => setHoveredLine(lineNum)}
                 onMouseLeave={() => setHoveredLine(null)}
               >
                 {/* Comment gutter (desktop) / Label (mobile) */}
-                <div className="flex items-center gap-2 w-full sm:w-auto">
+                <div className="flex items-center gap-2 w-full sm:w-auto sm:mt-3">
                   <div className="flex-shrink-0 w-6 flex items-center justify-center h-full">
                     {hoveredLine === lineNum && onAddLineComment ? (
                       <button
@@ -150,17 +150,25 @@ export function ClarityQuestionsEditor({
 
                 {/* Input */}
                 {readOnly ? (
-                  <div className="flex-1 px-4 py-3 bg-bg-elevated/40 rounded-sm text-sm sm:text-[15px] font-code font-bold text-text-primary border-2 border-border-default min-h-[48px] shadow-[4px_4px_0px_rgba(0,0,0,0.05)] w-full">
+                  <div className="flex-1 px-4 py-3 bg-bg-elevated/40 rounded-sm text-sm sm:text-[15px] font-code font-bold text-text-primary border-2 border-border-default min-h-[48px] shadow-[4px_4px_0px_rgba(0,0,0,0.05)] w-full whitespace-pre-wrap break-words">
                     {q || <span className="text-[10px] font-arcade font-normal text-text-muted/40 uppercase">EMPTY</span>}
                   </div>
                 ) : (
-                  <input
-                    type="text"
-                    value={q}
-                    onChange={(e) => updateQuestion(i, e.target.value)}
-                    placeholder={`E.G. WHY DO WE USE A HASHMAP HERE?`}
-                    className="flex-1 px-4 py-3 bg-bg-base rounded-sm text-sm sm:text-[15px] font-code font-bold text-text-primary border-2 border-border-default outline-none focus:border-brand-blue transition-all shadow-[4px_4px_0px_rgba(0,0,0,0.05)] focus:shadow-[4px_4px_0px_rgba(59,130,246,0.2)] focus:-translate-y-[1px] placeholder:font-normal placeholder:text-[12px] placeholder:text-text-muted/40 w-full"
-                  />
+                  <div className="flex-1 grid w-full">
+                    {/* Invisible div that sets the height based on text content */}
+                    <div 
+                      className="invisible col-start-1 row-start-1 px-4 py-3 text-sm sm:text-[15px] font-code font-bold whitespace-pre-wrap break-words border-2 border-transparent"
+                    >
+                      {q + ' '}
+                    </div>
+                    <textarea
+                      value={q}
+                      onChange={(e) => updateQuestion(i, e.target.value)}
+                      placeholder={`E.G. WHY DO WE USE A HASHMAP HERE?`}
+                      className="col-start-1 row-start-1 w-full h-full px-4 py-3 bg-bg-base rounded-sm text-sm sm:text-[15px] font-code font-bold text-text-primary border-2 border-border-default outline-none focus:border-brand-blue transition-all shadow-[4px_4px_0px_rgba(0,0,0,0.05)] focus:shadow-[4px_4px_0px_rgba(59,130,246,0.2)] focus:-translate-y-[1px] placeholder:font-normal placeholder:text-[12px] placeholder:text-text-muted/40 resize-none overflow-hidden whitespace-pre-wrap"
+                      rows={1}
+                    />
+                  </div>
                 )}
 
                 {/* Delete button */}
