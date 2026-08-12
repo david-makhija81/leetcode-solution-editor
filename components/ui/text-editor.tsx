@@ -216,7 +216,7 @@ export function TextEditor({
                 placeholder={placeholder}
                 spellCheck={false}
                 wrap="off"
-                className="w-full h-full py-4 pr-4 pl-2 bg-transparent text-text-primary text-sm leading-7 resize-none outline-none whitespace-pre font-medium"
+                className="w-full h-full py-4 pr-4 pl-2 bg-transparent text-text-primary text-sm sm:text-[15px] leading-7 resize-none outline-none whitespace-pre font-code font-bold"
                 style={{
                   minHeight: `${Math.max(lines.length, 10) * 28 + 32}px`,
                   overflowX: 'auto',
@@ -273,7 +273,7 @@ export function TextEditor({
 
                     {/* Text content */}
                     <div className="flex-1 min-w-0 py-1 pr-4 pl-2">
-                      <div className={`text-sm leading-7 text-text-primary whitespace-pre-wrap font-medium ${isEmpty ? "h-7" : ""}`}>
+                      <div className={`text-sm sm:text-[15px] leading-7 text-text-primary whitespace-pre-wrap font-code font-bold ${isEmpty ? "h-7" : ""}`}>
                         {lineContent}
                       </div>
                     </div>
