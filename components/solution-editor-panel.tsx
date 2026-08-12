@@ -273,18 +273,18 @@ export function SolutionEditorPanel({ problemId, currentUser, solutions, comment
       {activeSolution ? (
         <>
           {/* Field tabs */}
-          <div className="flex items-center gap-1.5 px-4 py-2 border-b-2 border-border-default bg-bg-surface/50">
+          <div className="flex items-center gap-1.5 px-4 py-2 border-b-2 border-border-default bg-bg-surface overflow-x-auto">
             {fieldTabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveField(tab.id)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider rounded-sm border-2 transition-all duration-150 ${
+                className={`flex items-center gap-1.5 px-3 py-2 text-[9px] font-arcade uppercase rounded-sm transition-all duration-150 whitespace-nowrap border-2 ${
                   activeField === tab.id
-                    ? "bg-text-primary text-bg-base border-text-primary shadow-[2px_2px_0px_rgba(0,0,0,0.2)]"
-                    : "text-text-muted border-transparent hover:text-text-primary hover:border-border-default"
+                    ? "bg-brand-blue border-text-primary text-bg-surface shadow-[2px_2px_0px_rgba(0,0,0,1)] translate-y-[1px]"
+                    : "bg-transparent border-transparent text-text-muted hover:text-text-primary hover:bg-bg-elevated hover:border-border-default"
                 }`}
               >
-                {tab.icon}
+                <div className="hidden sm:block">{tab.icon}</div>
                 {tab.label}
               </button>
             ))}
