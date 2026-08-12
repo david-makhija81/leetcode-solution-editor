@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Plus, Code, Lightbulb, Route, Timer, Trash2, Users, User, Send, Check, X, ClipboardList, HelpCircle } from "lucide-react";
+import { Plus, Code, Lightbulb, Route, Timer, Trash2, Users, User, Send, Check, X, ClipboardList, HelpCircle, ArrowLeft, ArrowRight } from "lucide-react";
 import { CodeEditor } from "@/components/ui/code-editor";
 import { TextEditor } from "@/components/ui/text-editor";
 import { ClarityQuestionsEditor } from "@/components/ui/clarity-questions-editor";
@@ -349,6 +349,37 @@ export function SolutionEditorPanel({ problemId, currentUser, solutions, comment
                 onAddLineComment={(line, content) => onAddComment(activeSolution.id, "complexity", line, content)}
               />
             )}
+
+            {/* Navigation Buttons */}
+            {(() => {
+              const currentTabIndex = fieldTabs.findIndex(t => t.id === activeField);
+              const previousTab = currentTabIndex > 0 ? fieldTabs[currentTabIndex - 1] : null;
+              const nextTab = currentTabIndex < fieldTabs.length - 1 ? fieldTabs[currentTabIndex + 1] : null;
+              
+              return (
+                <div className="mt-6 flex items-center justify-between">
+                  {previousTab ? (
+                    <button
+                      onClick={() => setActiveField(previousTab.id)}
+                      className="btn-arcade bg-bg-surface text-text-primary px-4 py-2 hover:text-brand-blue flex items-center gap-2"
+                    >
+                      <ArrowLeft className="h-4 w-4" />
+                      Previous
+                    </button>
+                  ) : <div />}
+                  
+                  {nextTab ? (
+                    <button
+                      onClick={() => setActiveField(nextTab.id)}
+                      className="btn-arcade bg-bg-surface text-text-primary px-4 py-2 hover:text-brand-blue flex items-center gap-2"
+                    >
+                      Next
+                      <ArrowRight className="h-4 w-4" />
+                    </button>
+                  ) : <div />}
+                </div>
+              );
+            })()}
           </div>
 
           {/* Footer */}
