@@ -106,25 +106,30 @@ export function ComplexityEditor({
 
   return (
     <div
-      className={`relative bg-bg-base rounded-lg border border-border-default overflow-hidden flex flex-col ${className}`}
+      className={`relative bg-bg-surface rounded-sm border-2 border-border-default shadow-[4px_4px_0px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col ${className}`}
     >
-      {/* Header */}
-      <div className="flex items-center justify-between px-4 py-2 bg-bg-surface border-b border-border-default flex-shrink-0">
-        <div className="flex items-center gap-2">
-          <Timer className="h-3.5 w-3.5 text-text-muted" />
-          <span className="text-xs text-text-muted font-medium uppercase tracking-wider">
-            Complexity Analysis
+      {/* Header - Terminal Style */}
+      <div className="flex items-center justify-between px-4 py-3 bg-bg-elevated border-b-2 border-border-default flex-shrink-0">
+        <div className="flex items-center gap-3">
+          <div className="flex gap-1.5 mr-1">
+            <div className="w-2.5 h-2.5 rounded-full bg-brand-red"></div>
+            <div className="w-2.5 h-2.5 rounded-full bg-brand-yellow"></div>
+            <div className="w-2.5 h-2.5 rounded-full bg-brand-green"></div>
+          </div>
+          <Timer className="h-4 w-4 text-brand-blue" strokeWidth={2.5} />
+          <span className="font-arcade text-[9px] text-text-secondary mt-1">
+            complexity.json
           </span>
           {lineComments.length > 0 && (
-            <span className="flex items-center gap-1 text-xs text-text-muted ml-2">
+            <span className="flex items-center gap-1 text-[9px] font-arcade text-brand-yellow ml-2 mt-1">
               <MessageSquare className="h-3 w-3" />
               {lineComments.length}
             </span>
           )}
         </div>
         {readOnly && (
-          <span className="text-xs text-text-muted bg-bg-elevated px-2 py-0.5 rounded-sm">
-            Read only
+          <span className="text-[9px] font-arcade text-text-muted uppercase border border-border-default shadow-[2px_2px_0px_rgba(0,0,0,0.1)] px-2 py-1 rounded-sm bg-bg-base">
+            READ ONLY
           </span>
         )}
       </div>
@@ -162,7 +167,7 @@ export function ComplexityEditor({
                 {/* Label */}
                 <div className="flex-shrink-0 w-56 mt-1.5">
                   {readOnly || isDefault ? (
-                    <span className="text-xs font-medium text-accent-primary/80">
+                    <span className="text-[10px] font-bold text-brand-blue uppercase tracking-wider">
                       {field.label}
                     </span>
                   ) : (
@@ -170,15 +175,15 @@ export function ComplexityEditor({
                       type="text"
                       value={field.label}
                       onChange={(e) => updateFieldLabel(i, e.target.value)}
-                      placeholder="Field name..."
-                      className="w-full text-xs font-medium text-accent-primary bg-transparent border-b border-accent-primary/30 outline-none focus:border-accent-primary pb-0.5 placeholder:text-text-muted/40"
+                      placeholder="FIELD NAME..."
+                      className="w-full text-[10px] font-bold text-brand-blue uppercase tracking-wider bg-transparent border-b-2 border-brand-blue/30 outline-none focus:border-brand-blue pb-0.5 placeholder:text-text-muted/40"
                     />
                   )}
                 </div>
 
                 {/* Value */}
                 {readOnly ? (
-                  <div className="flex-1 px-3 py-2 bg-bg-elevated/40 rounded-lg text-sm text-text-primary border border-border-default/50 min-h-[38px] font-code">
+                  <div className="flex-1 px-3 py-2 bg-bg-elevated/50 rounded-sm text-sm text-text-primary border-2 border-border-default min-h-[38px] font-code shadow-[2px_2px_0px_rgba(0,0,0,0.02)]">
                     {field.value || <span className="text-text-muted/40 italic font-sans">Not specified</span>}
                   </div>
                 ) : (
@@ -187,7 +192,7 @@ export function ComplexityEditor({
                     value={field.value}
                     onChange={(e) => updateFieldValue(i, e.target.value)}
                     placeholder={i === 0 ? "e.g. O(n²)" : i === 1 ? "e.g. O(n)" : "Value..."}
-                    className="flex-1 px-3 py-2 bg-bg-elevated/40 rounded-lg text-sm text-text-primary border border-border-default/50 outline-none focus:border-accent-primary/60 transition-colors font-code placeholder:text-text-muted/40 placeholder:font-sans"
+                    className="flex-1 px-3 py-2 bg-bg-base rounded-sm text-sm text-text-primary border-2 border-border-default outline-none focus:border-brand-blue transition-colors font-code placeholder:text-text-muted/40 shadow-[2px_2px_0px_rgba(0,0,0,0.02)] focus:shadow-[2px_2px_0px_rgba(59,130,246,0.2)]"
                   />
                 )}
 
@@ -311,10 +316,10 @@ export function ComplexityEditor({
         {!readOnly && (
           <button
             onClick={addField}
-            className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-text-muted hover:text-accent-primary hover:bg-bg-elevated/50 rounded-lg transition-colors w-full border border-dashed border-border-default/50 hover:border-accent-primary/40 mt-2"
+            className="flex items-center justify-center gap-2 px-3 py-2.5 text-[10px] font-arcade text-text-muted hover:text-brand-green hover:bg-brand-green/10 rounded-sm transition-colors w-full border-2 border-dashed border-border-default hover:border-brand-green mt-3 uppercase"
           >
-            <Plus className="h-3.5 w-3.5" />
-            Add Complexity Field
+            <Plus className="h-3 w-3" strokeWidth={3} />
+            Add Field
           </button>
         )}
       </div>

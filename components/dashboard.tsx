@@ -31,7 +31,6 @@ export function Dashboard({ problems }: { problems: any[] }) {
   const { user } = useUser();
   const [activeFilter, setActiveFilter] = useState<FilterTab>("all");
   const [searchQuery, setSearchQuery] = useState("");
-  const [isSyncing, setIsSyncing] = useState(false);
 
   const filteredProblems = useMemo(() => {
     return problems.filter((p) => {
@@ -143,33 +142,6 @@ export function Dashboard({ problems }: { problems: any[] }) {
                 className="w-full pl-9 pr-4 py-2 bg-bg-surface border border-border-default rounded-lg text-sm text-text-primary placeholder:text-text-muted/50 outline-none focus:border-accent-primary/50 transition-colors"
               />
             </div>
-            <button
-              onClick={async () => {
-                setIsSyncing(true);
-                try {
-                  const { syncAllLeetCodeProblems } = await import("@/app/actions/problems");
-                  await syncAllLeetCodeProblems();
-                } catch (e) {
-                  console.error(e);
-                } finally {
-                  setIsSyncing(false);
-                }
-              }}
-              disabled={isSyncing}
-              className="flex items-center gap-2 px-4 py-2 bg-accent-primary hover:bg-accent-secondary text-text-inverse text-sm font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
-            >
-              {isSyncing ? (
-                <>
-                  <div className="h-4 w-4 border-2 border-text-inverse border-t-transparent rounded-full animate-spin" />
-                  Syncing...
-                </>
-              ) : (
-                <>
-                  <Code2 className="h-4 w-4" />
-                  Sync Problems
-                </>
-              )}
-            </button>
           </div>
         </div>
 
@@ -215,11 +187,11 @@ function StatCard({
   value: number;
 }) {
   return (
-    <div className="flex items-center gap-3 p-4 bg-bg-surface rounded-lg border border-border-default">
-      <div className="flex-shrink-0 p-2 bg-bg-elevated rounded-lg">{icon}</div>
+    <div className="flex items-center gap-3 p-4 bg-bg-surface rounded-sm border-2 border-border-default shadow-[4px_4px_0px_rgba(0,0,0,0.05)]">
+      <div className="flex-shrink-0 p-2 bg-bg-elevated rounded-sm border-2 border-border-default/50">{icon}</div>
       <div>
-        <p className="text-lg font-semibold text-text-primary">{value}</p>
-        <p className="text-xs text-text-muted">{label}</p>
+        <p className="text-xl font-arcade text-text-primary">{value}</p>
+        <p className="text-[8px] font-arcade uppercase text-text-secondary mt-1 tracking-wider">{label}</p>
       </div>
     </div>
   );
