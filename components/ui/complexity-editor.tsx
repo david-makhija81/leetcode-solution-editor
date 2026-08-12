@@ -183,8 +183,8 @@ export function ComplexityEditor({
 
                 {/* Value */}
                 {readOnly ? (
-                  <div className="flex-1 px-4 py-3 bg-bg-elevated/50 rounded-sm text-base text-text-primary border-2 border-border-default min-h-[48px] font-code shadow-[4px_4px_0px_rgba(0,0,0,0.05)]">
-                    {field.value || <span className="text-[10px] font-arcade text-text-muted/40 uppercase">NOT SPECIFIED</span>}
+                  <div className="flex-1 px-4 py-3 bg-bg-elevated/50 rounded-sm text-base font-bold text-text-primary border-2 border-border-default min-h-[48px] font-code shadow-[4px_4px_0px_rgba(0,0,0,0.05)]">
+                    {field.value || <span className="text-[10px] font-arcade font-normal text-text-muted/40 uppercase">NOT SPECIFIED</span>}
                   </div>
                 ) : (
                   <input
@@ -192,7 +192,7 @@ export function ComplexityEditor({
                     value={field.value}
                     onChange={(e) => updateFieldValue(i, e.target.value)}
                     placeholder={i === 0 ? "E.G. O(N²)" : i === 1 ? "E.G. O(N)" : "VALUE..."}
-                    className="flex-1 px-4 py-3 bg-bg-base rounded-sm text-base text-text-primary border-2 border-border-default outline-none focus:border-brand-blue transition-all font-code placeholder:text-text-muted/40 shadow-[4px_4px_0px_rgba(0,0,0,0.05)] focus:shadow-[4px_4px_0px_rgba(59,130,246,0.2)] focus:-translate-y-[1px]"
+                    className="flex-1 px-4 py-3 bg-bg-base rounded-sm text-base font-bold text-text-primary border-2 border-border-default outline-none focus:border-brand-blue transition-all font-code placeholder:text-text-muted/40 placeholder:font-normal shadow-[4px_4px_0px_rgba(0,0,0,0.05)] focus:shadow-[4px_4px_0px_rgba(59,130,246,0.2)] focus:-translate-y-[1px]"
                   />
                 )}
 
