@@ -21,10 +21,10 @@ export function ProblemCard({ problem, assignedSolutionId }: ProblemCardProps) {
       {/* Header row */}
       <div className="flex items-start justify-between gap-3 mb-3">
         <div className="flex items-center gap-2.5 min-w-0">
-          <span className="text-text-muted text-sm font-code flex-shrink-0">
+          <span className="text-brand-blue text-[10px] font-arcade flex-shrink-0 mt-0.5">
             #{problem.number}
           </span>
-          <h3 className="text-text-primary font-medium text-sm truncate group-hover:text-accent-primary transition-colors">
+          <h3 className="text-text-primary font-arcade text-xs truncate group-hover:text-brand-blue transition-colors uppercase">
             {problem.title}
           </h3>
         </div>
@@ -34,7 +34,7 @@ export function ProblemCard({ problem, assignedSolutionId }: ProblemCardProps) {
       {/* Tags */}
       <div className="flex flex-wrap gap-1.5 mb-4">
         {problem.tags.map((tag) => (
-          <Badge key={tag} variant="default">
+          <Badge key={tag} variant="default" className="font-arcade text-[8px] uppercase">
             {tag}
           </Badge>
         ))}
