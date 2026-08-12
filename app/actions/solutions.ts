@@ -48,7 +48,18 @@ export async function createSolutionSet(data: {
     },
   });
 
+  if (data.code && data.code.trim().length > 0) {
+    const problem = await prisma.problem.findUnique({ where: { id: data.problemId } });
+    if (problem && problem.status === "unsolved") {
+      await prisma.problem.update({
+        where: { id: data.problemId },
+        data: { status: "solved" },
+      });
+    }
+  }
+
   revalidatePath(`/problems/${data.problemId}`);
+  revalidatePath(`/`);
   return solution;
 }
 
@@ -69,7 +80,18 @@ export async function updateSolutionSet(
     data,
   });
 
+  if (data.code && data.code.trim().length > 0) {
+    const problem = await prisma.problem.findUnique({ where: { id: solution.problemId } });
+    if (problem && problem.status === "unsolved") {
+      await prisma.problem.update({
+        where: { id: solution.problemId },
+        data: { status: "solved" },
+      });
+    }
+  }
+
   revalidatePath(`/problems/${solution.problemId}`);
+  revalidatePath(`/`);
   return solution;
 }
 
