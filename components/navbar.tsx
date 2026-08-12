@@ -45,7 +45,9 @@ export function Navbar({ breadcrumbs }: NavbarProps) {
       {/* Right: Auth */}
       <div className="flex items-center gap-3">
         <Show when="signed-in">
-          <UserButton />
+          <div className="rounded-full border-[3px] border-brand-yellow shadow-[2px_2px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_rgba(0,0,0,1)] transition-all flex items-center justify-center bg-bg-surface">
+            <UserButton />
+          </div>
         </Show>
         <Show when="signed-out">
           <SignInButton mode="modal">
