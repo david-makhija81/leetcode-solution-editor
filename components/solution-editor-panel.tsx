@@ -349,38 +349,38 @@ export function SolutionEditorPanel({ problemId, currentUser, solutions, comment
                 onAddLineComment={(line, content) => onAddComment(activeSolution.id, "complexity", line, content)}
               />
             )}
+            </div>
 
-            {/* Navigation Buttons */}
-            {(() => {
-              const currentTabIndex = fieldTabs.findIndex(t => t.id === activeField);
-              const previousTab = currentTabIndex > 0 ? fieldTabs[currentTabIndex - 1] : null;
-              const nextTab = currentTabIndex < fieldTabs.length - 1 ? fieldTabs[currentTabIndex + 1] : null;
-              
-              return (
-                <div className="mt-6 flex items-center justify-between">
-                  {previousTab ? (
-                    <button
-                      onClick={() => setActiveField(previousTab.id)}
-                      className="btn-arcade bg-bg-surface text-text-primary px-4 py-2 hover:text-brand-blue flex items-center gap-2"
-                    >
-                      <ArrowLeft className="h-4 w-4" />
-                      Previous
-                    </button>
-                  ) : <div />}
-                  
-                  {nextTab ? (
-                    <button
-                      onClick={() => setActiveField(nextTab.id)}
-                      className="btn-arcade bg-bg-surface text-text-primary px-4 py-2 hover:text-brand-blue flex items-center gap-2"
-                    >
-                      Next
-                      <ArrowRight className="h-4 w-4" />
-                    </button>
-                  ) : <div />}
-                </div>
-              );
-            })()}
-          </div>
+          {/* Navigation Buttons (Fixed at bottom of editor area) */}
+          {(() => {
+            const currentTabIndex = fieldTabs.findIndex(t => t.id === activeField);
+            const previousTab = currentTabIndex > 0 ? fieldTabs[currentTabIndex - 1] : null;
+            const nextTab = currentTabIndex < fieldTabs.length - 1 ? fieldTabs[currentTabIndex + 1] : null;
+            
+            return (
+              <div className="px-4 py-3 border-t-2 border-border-default bg-bg-surface flex items-center justify-between z-10">
+                {previousTab ? (
+                  <button
+                    onClick={() => setActiveField(previousTab.id)}
+                    className="btn-arcade bg-bg-base text-text-primary px-4 py-2 hover:text-brand-blue flex items-center gap-2"
+                  >
+                    <ArrowLeft className="h-4 w-4" />
+                    Previous
+                  </button>
+                ) : <div />}
+                
+                {nextTab ? (
+                  <button
+                    onClick={() => setActiveField(nextTab.id)}
+                    className="btn-arcade bg-bg-base text-text-primary px-4 py-2 hover:text-brand-blue flex items-center gap-2"
+                  >
+                    Next
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
+                ) : <div />}
+              </div>
+            );
+          })()}
 
           {/* Footer */}
           <div className="px-4 py-3 border-t-2 border-border-default bg-brand-blue/5 flex items-center justify-between text-xs text-text-secondary font-medium">
