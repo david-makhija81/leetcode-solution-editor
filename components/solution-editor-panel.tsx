@@ -34,9 +34,32 @@ export function SolutionEditorPanel({ problemId, currentUser, solutions, comment
   const searchParams = useSearchParams();
   const assignedSolutionId = searchParams.get("solutionId");
 
+  function getDefaultFieldForSolution(sol: any): FieldTab {
+    if (!sol) return "clarityQuestions";
+    
+    let isClarityEmpty = true;
+    try {
+      const parsed = JSON.parse(sol.clarityQuestions || "[]");
+      isClarityEmpty = !Array.isArray(parsed) || parsed.length === 0 || parsed.every(q => typeof q !== "string" || !q.trim());
+    } catch {
+      isClarityEmpty = true;
+    }
+    
+    const isCodePopulated = sol.code && sol.code.trim().length > 0;
+    
+    if (isClarityEmpty && isCodePopulated) {
+      return "intuition";
+    }
+    
+    return "clarityQuestions";
+  }
+
   const [view, setView] = useState<"mine" | "peers" | "assigned">("mine");
   const [activeSolutionIndex, setActiveSolutionIndex] = useState(0);
-  const [activeField, setActiveField] = useState<FieldTab>("clarityQuestions");
+  const [activeField, setActiveField] = useState<FieldTab>(() => {
+    const mySol = solutions.filter(s => s.authorId === currentUser?.id);
+    return getDefaultFieldForSolution(mySol[0]);
+  });
   const [solutionData, setSolutionData] = useState(solutions);
   const [solutionIdToDelete, setSolutionIdToDelete] = useState<string | null>(null);
   
@@ -55,16 +78,19 @@ export function SolutionEditorPanel({ problemId, currentUser, solutions, comment
       if (assignedIndex !== -1) {
         setView("assigned");
         setActiveSolutionIndex(assignedIndex);
+        setActiveField(getDefaultFieldForSolution(assignedSol[assignedIndex]));
       } else {
         const peerIndex = peerSol.findIndex(s => s.id === assignedSolutionId);
         if (peerIndex !== -1) {
           setView("peers");
           setActiveSolutionIndex(peerIndex);
+          setActiveField(getDefaultFieldForSolution(peerSol[peerIndex]));
         } else {
           const myIndex = mySol.findIndex(s => s.id === assignedSolutionId);
           if (myIndex !== -1) {
             setView("mine");
             setActiveSolutionIndex(myIndex);
+            setActiveField(getDefaultFieldForSolution(mySol[myIndex]));
           }
         }
       }
@@ -96,7 +122,12 @@ export function SolutionEditorPanel({ problemId, currentUser, solutions, comment
   function handleViewChange(newView: "mine" | "peers" | "assigned") {
     setView(newView);
     setActiveSolutionIndex(0);
-    setActiveField("clarityQuestions");
+    const newDisplayedSolutions = solutionData.filter(s => {
+      if (newView === "mine") return s.authorId === currentUser?.id;
+      if (newView === "assigned") return s.reviewerId === currentUser?.id;
+      return s.authorId !== currentUser?.id;
+    });
+    setActiveField(getDefaultFieldForSolution(newDisplayedSolutions[0]));
   }
 
   async function updateField(field: keyof SolutionSet, value: string) {
@@ -142,7 +173,7 @@ export function SolutionEditorPanel({ problemId, currentUser, solutions, comment
       
       setView("mine");
       setActiveSolutionIndex(displayedSolutions.length);
-      setActiveField("clarityQuestions");
+      setActiveField("clarityQuestions"); // New solutions always default to clarityQuestions
     } catch (error) {
       console.error("Failed to create solution", error);
     }
@@ -233,7 +264,7 @@ export function SolutionEditorPanel({ problemId, currentUser, solutions, comment
             key={sol.id}
             onClick={() => {
               setActiveSolutionIndex(i);
-              setActiveField("clarityQuestions");
+              setActiveField(getDefaultFieldForSolution(sol));
             }}
             className={`flex-shrink-0 flex items-center gap-1 px-3 py-1.5 text-xs font-bold rounded-sm border-2 transition-all duration-150 cursor-pointer ${
               i === activeSolutionIndex
