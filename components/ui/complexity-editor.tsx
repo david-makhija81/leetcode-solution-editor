@@ -165,9 +165,9 @@ export function ComplexityEditor({
                 </div>
 
                 {/* Label */}
-                <div className="flex-shrink-0 w-56 mt-1.5">
+                <div className="flex-shrink-0 w-32 sm:w-56 mt-2">
                   {readOnly || isDefault ? (
-                    <span className="text-[10px] font-bold text-brand-blue uppercase tracking-wider">
+                    <span className="text-[8px] sm:text-[9px] font-arcade text-brand-blue uppercase">
                       {field.label}
                     </span>
                   ) : (
@@ -176,23 +176,23 @@ export function ComplexityEditor({
                       value={field.label}
                       onChange={(e) => updateFieldLabel(i, e.target.value)}
                       placeholder="FIELD NAME..."
-                      className="w-full text-[10px] font-bold text-brand-blue uppercase tracking-wider bg-transparent border-b-2 border-brand-blue/30 outline-none focus:border-brand-blue pb-0.5 placeholder:text-text-muted/40"
+                      className="w-full text-[8px] sm:text-[9px] font-arcade text-brand-blue uppercase bg-transparent border-b-2 border-brand-blue/30 outline-none focus:border-brand-blue pb-1 placeholder:text-text-muted/40"
                     />
                   )}
                 </div>
 
                 {/* Value */}
                 {readOnly ? (
-                  <div className="flex-1 px-3 py-2 bg-bg-elevated/50 rounded-sm text-sm text-text-primary border-2 border-border-default min-h-[38px] font-code shadow-[2px_2px_0px_rgba(0,0,0,0.02)]">
-                    {field.value || <span className="text-text-muted/40 italic font-sans">Not specified</span>}
+                  <div className="flex-1 px-3 py-2 bg-bg-elevated/50 rounded-sm text-sm text-text-primary border-2 border-border-default min-h-[38px] font-code shadow-[4px_4px_0px_rgba(0,0,0,0.05)]">
+                    {field.value || <span className="text-[9px] font-arcade text-text-muted/40 uppercase">NOT SPECIFIED</span>}
                   </div>
                 ) : (
                   <input
                     type="text"
                     value={field.value}
                     onChange={(e) => updateFieldValue(i, e.target.value)}
-                    placeholder={i === 0 ? "e.g. O(n²)" : i === 1 ? "e.g. O(n)" : "Value..."}
-                    className="flex-1 px-3 py-2 bg-bg-base rounded-sm text-sm text-text-primary border-2 border-border-default outline-none focus:border-brand-blue transition-colors font-code placeholder:text-text-muted/40 shadow-[2px_2px_0px_rgba(0,0,0,0.02)] focus:shadow-[2px_2px_0px_rgba(59,130,246,0.2)]"
+                    placeholder={i === 0 ? "E.G. O(N²)" : i === 1 ? "E.G. O(N)" : "VALUE..."}
+                    className="flex-1 px-3 py-2 bg-bg-base rounded-sm text-sm text-text-primary border-2 border-border-default outline-none focus:border-brand-blue transition-all font-code placeholder:text-text-muted/40 shadow-[4px_4px_0px_rgba(0,0,0,0.05)] focus:shadow-[4px_4px_0px_rgba(59,130,246,0.2)] focus:-translate-y-[1px]"
                   />
                 )}
 
