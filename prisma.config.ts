@@ -10,6 +10,7 @@ export default defineConfig({
   },
   datasource: {
     url: env("DATABASE_URL"),
+    // @ts-ignore - Prisma 7 types are missing directUrl, but the CLI requires it
     directUrl: env("DIRECT_URL"),
   },
 });
